@@ -82,8 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     String token=new String(FirebaseInstanceId.getInstance().getToken().toString()) ;
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference myRef = database.getReference("users/" + firebaseuid() + "/token");
+                    Private DatabaseReference myRef = database.getReference("users/" + firebaseuid() + "/token");
                     myRef.setValue(token);
+                    myRef.parent.child("name").setvalue(user.getDisplayName());
 
                 }
 
