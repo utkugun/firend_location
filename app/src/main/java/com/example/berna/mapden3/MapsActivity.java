@@ -22,6 +22,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,7 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker marker;
     public Marker[] friendmarker = new Marker[100];
     int i;
-userdata user =new userdata();
+     userdata user =new userdata();
     HashMap<String, Marker> Hashmap = new HashMap();
 
     LocationRequest mLocationRequest;
@@ -97,7 +98,7 @@ try {
 
         mGoogleApiClient.connect();
 } catch (Exception e) {
-              Log.e("Error", e.getMessage());
+
               e.printStackTrace();
           }
           
@@ -194,7 +195,7 @@ stopService(new Intent(MapsActivity.this, MyService1.class));
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Double friendlat = (Double) dataSnapshot.child(child.getValue().toString() + "/location/lat").getValue();
                                 Double friendlong = (Double) dataSnapshot.child(child.getValue().toString() + "/location/long").getValue();
-                               String friendname=dataSnapshot.child(child.getValue().toString()+"/name").getvalue();
+                               String friendname= (String) dataSnapshot.child(child.getValue().toString()+"/name").getValue();
                                LatLng friendcurrentposition = new LatLng(friendlat, friendlong);
 
 
@@ -306,7 +307,7 @@ stopService(new Intent(MapsActivity.this, MyService1.class));
             @Override
             public void onLocationChanged(Location mlocation) {
 
-                text.setText(mlocation.getProvider()+" "+mlocation.getAccuracy());
+                text.setText(user.firebasefoto());
                // Toast.makeText(this,"kkk",Toast.LENGTH_LONG).show();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("users/" + user.firebaseuid() + "/location");
