@@ -1,7 +1,17 @@
 package com.example.berna.mapden3;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by berna on 16.07.2017.
@@ -34,20 +44,6 @@ public class userdata {
         return foto;
     }
     
-    
-     public Bitmap getfoto() {
-          String urldisplay = firebasefoto();
-          Bitmap mIcon11 = null;
-          try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-          } catch (Exception e) {
-              Log.e("Error", e.getMessage());
-              e.printStackTrace();
-          }
-          return mIcon11;
-      }
 
-    
-    
-}
+     }
+
