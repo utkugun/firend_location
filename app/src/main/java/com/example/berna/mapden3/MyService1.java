@@ -24,9 +24,14 @@ public class MyService1 extends Service{
         loc.apibuild();
         loc.createLocationRequest();
         loc.mLocationRequest= LocationRequest.create();
+        
+        try{
         loc.mGoogleApiClient.connect();
 
-
+} catch (Exception e) {
+              Log.e("Error", e.getMessage());
+              e.printStackTrace();
+          }
 return START_STICKY;
 
 

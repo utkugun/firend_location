@@ -93,9 +93,14 @@ userdata user =new userdata();
 
         super.onStart();
 
+try {
 
         mGoogleApiClient.connect();
-
+} catch (Exception e) {
+              Log.e("Error", e.getMessage());
+              e.printStackTrace();
+          }
+          
 stopService(new Intent(MapsActivity.this, MyService1.class));
 
 
@@ -189,7 +194,8 @@ stopService(new Intent(MapsActivity.this, MyService1.class));
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Double friendlat = (Double) dataSnapshot.child(child.getValue().toString() + "/location/lat").getValue();
                                 Double friendlong = (Double) dataSnapshot.child(child.getValue().toString() + "/location/long").getValue();
-                                LatLng friendcurrentposition = new LatLng(friendlat, friendlong);
+                               String friendname=dataSnapshot.child(child.getValue().toString()+"/name").getvalue();
+                               LatLng friendcurrentposition = new LatLng(friendlat, friendlong);
 
 
                                 if (friendmarker[i] == null) {
@@ -197,7 +203,7 @@ stopService(new Intent(MapsActivity.this, MyService1.class));
                                     MarkerOptions a = new MarkerOptions().position(friendcurrentposition)
                                             .draggable(true).title(myRef2.getParent().toString())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
-                                            .title(child.getValue().toString());
+                                            .title(friendname);
 
                                     friendmarker[i] = mMap.addMarker(a);
                                     Hashmap.put(child.getValue().toString(), friendmarker[i]);
