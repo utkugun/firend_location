@@ -94,9 +94,14 @@ userdata user =new userdata();
 
         super.onStart();
 
+try {
 
         mGoogleApiClient.connect();
-
+} catch (Exception e) {
+              Log.e("Error", e.getMessage());
+              e.printStackTrace();
+          }
+          
 stopService(new Intent(MapsActivity.this, MyService1.class));
 
 
