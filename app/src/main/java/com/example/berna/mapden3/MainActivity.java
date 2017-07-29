@@ -1,13 +1,20 @@
 package com.example.berna.mapden3;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -79,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
+               final ImageView image = (ImageView) findViewById(R.id.imageView);
                 if (mAuth.getCurrentUser()!=null){
 
                     String token=new String(FirebaseInstanceId.getInstance().getToken().toString()) ;
@@ -87,6 +94,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                    DatabaseReference myRef = database.getReference("users/" + firebaseuid() + "/token");
                     myRef.setValue(token);
                     myRef.getParent().child("name").setValue(mAuth.getCurrentUser().getDisplayName());
+
+                    Glide.with(MainActivity.this)
+                        .load(new userdata().firebasefoto())
+                            .asBitmap()
+                            .into(new SimpleTarget<Bitmap>(80, 80) {
+                                @Override
+                                public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                                    image.setImageBitmap(bitmap);
+                                }
+                            });
 
                 }
 

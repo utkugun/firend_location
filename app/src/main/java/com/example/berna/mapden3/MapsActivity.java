@@ -3,6 +3,7 @@ package com.example.berna.mapden3;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
@@ -13,6 +14,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -168,7 +172,15 @@ stopService(new Intent(MapsActivity.this, MyService1.class));
 
 
                 marker.setPosition(latlng);
-
+                Glide.with(MapsActivity.this)
+                        .load(new userdata().firebasefoto())
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(80, 80) {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                               marker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                            }
+                        });
 
             }
 
